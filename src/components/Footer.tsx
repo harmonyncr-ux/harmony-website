@@ -31,7 +31,7 @@ export default function Footer() {
               Empowering tomorrow&apos;s HR leaders. Great Lakes Institute of Management Gurgaon&apos;s flagship HR student community.
             </p>
             <div className="flex items-center gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#5850ec]/30 bg-[#5850ec]/10 px-3 py-1 font-mono text-[11px] text-[#5850ec]">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#5850ec]/30 bg-[#5850ec]/10 px-3 py-1 text-[11px] text-[#5850ec]">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
                 GLIM Gurgaon Chapter
               </span>
@@ -40,7 +40,7 @@ export default function Footer() {
 
           {/* Col 2: Core Hubs */}
           <div>
-            <h4 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
               Core Practice Hubs
             </h4>
             <ul className="space-y-2.5 text-xs">
@@ -73,7 +73,7 @@ export default function Footer() {
 
           {/* Col 3: Resources */}
           <div>
-            <h4 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
               Student Resources
             </h4>
             <ul className="space-y-2.5 text-xs">
@@ -102,7 +102,7 @@ export default function Footer() {
 
           {/* Col 4: Network */}
           <div>
-            <h4 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
               Alumni & Recruiters
             </h4>
             <ul className="space-y-2.5 text-xs">
@@ -129,7 +129,7 @@ export default function Footer() {
                   placeholder="Enter email..."
                   className="w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#5850ec]"
                 />
-                <button className="rounded-full bg-[#5850ec] px-3 py-1.5 font-mono text-xs font-bold text-white hover:bg-[#4b44dc]">
+                <button className="rounded-full bg-[#5850ec] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b44dc]">
                   Join
                 </button>
               </div>
@@ -143,7 +143,7 @@ export default function Footer() {
           <p>
             &copy; {new Date().getFullYear()} Harmony HR Club, Great Lakes Institute of Management Gurgaon. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 font-mono text-[11px]">
+          <div className="flex items-center gap-4 text-[11px]">
             <span className="text-slate-600">Master HR Judgment</span>
             <span className="h-1 w-1 rounded-full bg-slate-300" />
             <span className="text-[#5850ec] font-bold">GLIM Gurgaon Chapter</span>

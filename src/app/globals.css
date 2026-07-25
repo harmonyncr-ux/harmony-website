@@ -4,7 +4,7 @@
   :root {
     --font-outfit: 'Outfit', system-ui, sans-serif;
     --font-jakarta: 'Plus Jakarta Sans', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-mono: var(--font-jakarta);
   }
 
   body {

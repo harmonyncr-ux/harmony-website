@@ -106,10 +106,10 @@ export default function HrDilemmaSimulator() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-[#5850ec]">{currentCase.number}</span>
+              <span className="text-xs font-bold text-[#5850ec]">{currentCase.number}</span>
               <span className="text-slate-300">•</span>
               <span className="text-xs font-medium text-slate-500">{currentCase.date}</span>
-              <span className="rounded-full bg-[#5850ec]/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-[#5850ec]">
+              <span className="rounded-full bg-[#5850ec]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[#5850ec]">
                 {currentCase.difficulty}
               </span>
             </div>
@@ -122,7 +122,7 @@ export default function HrDilemmaSimulator() {
         {/* Streak Counter */}
         <div className="flex items-center gap-2 rounded-full border border-[#5850ec]/30 bg-[#EEF2FF] px-4 py-1.5 shadow-sm">
           <Flame className="h-4 w-4 text-[#5850ec] animate-bounce" />
-          <span className="font-mono text-xs font-bold text-slate-900">
+          <span className="text-xs font-bold text-slate-900">
             {streakCount} Day Streak
           </span>
         </div>
@@ -147,7 +147,7 @@ export default function HrDilemmaSimulator() {
 
       {/* Options */}
       <div className="mt-6 space-y-3">
-        <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
+        <h4 className="text-xs font-semibold uppercase tracking-wider text-[#5850ec]">
           Select Your Recommended Action:
         </h4>
 
@@ -186,7 +186,7 @@ export default function HrDilemmaSimulator() {
                         {opt.label}
                       </span>
                       {isSelected && (
-                        <span className="rounded-full bg-[#5850ec] px-2 py-0.2 font-mono text-[9px] font-bold text-white">
+                        <span className="rounded-full bg-[#5850ec] px-2 py-0.2 text-[9px] font-bold text-white">
                           SELECTED
                         </span>
                       )}
@@ -201,19 +201,19 @@ export default function HrDilemmaSimulator() {
                         animate={{ opacity: 1, height: "auto" }}
                         className="mt-3 rounded-xl border border-[#5850ec]/30 bg-white p-3 text-[11px] text-slate-700 shadow-sm"
                       >
-                        <span className="font-mono font-semibold text-[#5850ec]">HRBP Analysis: </span>
+                        <span className="font-semibold text-[#5850ec]">HRBP Analysis: </span>
                         {opt.rationale}
                       </motion.div>
                     )}
                   </div>
 
                   {hasVoted ? (
-                    <div className="text-right font-mono text-sm font-bold text-[#5850ec]">
+                    <div className="text-right text-sm font-bold text-[#5850ec]">
                       {votePercent}%
                     </div>
                   ) : (
                     <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
-                      isSelected ? "border-[#5850ec] bg-[#5850ec] text-white" : "border-slate-300 bg-white"
+                      isSelected ? "border-[#5850ec] bg-[#5850ec] text-[#5850ec]" : "border-slate-300 bg-white"
                     }`}>
                       {isSelected && <CheckCircle2 className="h-3.5 w-3.5" />}
                     </div>
@@ -242,7 +242,7 @@ export default function HrDilemmaSimulator() {
           </button>
         ) : (
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1.5 font-mono text-xs font-semibold text-emerald-600">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
               <CheckCircle2 className="h-4 w-4 text-emerald-600" />
               Judgment Recorded (+10 XP)
             </span>

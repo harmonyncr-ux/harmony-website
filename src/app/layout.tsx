@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,12 +13,6 @@ const outfit = Outfit({
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
   display: "swap",
 });
 
@@ -38,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}
+      className={`${outfit.variable} ${jakarta.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-[#f8fafc] text-slate-900 antialiased selection:bg-[#5850ec]/20 selection:text-[#5850ec]">
         <Header />

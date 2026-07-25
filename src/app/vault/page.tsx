@@ -18,7 +18,7 @@ export default function VaultPage() {
       
       {/* Page Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#5850ec]/30 bg-[#EEF2FF] px-3.5 py-1 font-mono text-xs font-semibold text-[#5850ec]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#5850ec]/30 bg-[#EEF2FF] px-3.5 py-1 text-xs font-semibold text-[#5850ec]">
           <ShieldAlert className="h-3.5 w-3.5" />
           <span>Core Habit Loop</span>
         </div>
@@ -50,7 +50,7 @@ export default function VaultPage() {
             {["All Cases", "Performance", "Rewards & Comp", "Ethics", "Change Mgmt"].map((filter, idx) => (
               <button
                 key={filter}
-                className={`rounded-full px-4 py-1.5 font-mono text-xs font-medium transition-colors ${
+                className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
                   idx === 0
                     ? "bg-[#5850ec] text-white font-bold"
                     : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
@@ -70,7 +70,7 @@ export default function VaultPage() {
               className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[#5850ec]/40 hover:shadow-lg"
             >
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-500 font-mono">
+                <div className="flex items-center justify-between text-xs text-slate-500">
                   <span>{c.date}</span>
                   <span className="rounded-full bg-[#EEF2FF] px-2.5 py-0.5 text-[10px] font-bold text-[#5850ec]">
                     {c.topic}
@@ -84,7 +84,7 @@ export default function VaultPage() {
                 </p>
               </div>
 
-              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-500 font-mono">
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-500">
                 <span>{c.responses} Student Submissions</span>
                 <span className="text-[#5850ec] font-bold group-hover:translate-x-0.5 transition-transform">
                   Solve Case →

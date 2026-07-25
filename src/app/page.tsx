@@ -129,7 +129,7 @@ export default function HomePage() {
                 Empower Your HR Strategy, <br />
                 Discover Your <span className="relative inline-block text-[#5850ec]">
                   Ideal Leadership
-                  <UnderlineDoodle className="absolute -bottom-3 left-0 text-[#5850ec]" />
+                  <UnderlineDoodle className="absolute top-[88%] left-0 text-[#5850ec] pointer-events-none" />
                 </span>
               </h1>
             </div>
@@ -194,8 +194,8 @@ export default function HomePage() {
                   <CheckCircle className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="font-mono text-[10px] font-bold text-slate-400 block">Interview Readiness</span>
-                  <span className="font-mono text-xs font-bold text-white">98% Benchmark Score</span>
+                  <span className="text-[10px] font-bold text-slate-400 block">Interview Readiness</span>
+                  <span className="text-xs font-bold text-white">98% Benchmark Score</span>
                 </div>
               </div>
 
@@ -205,8 +205,8 @@ export default function HomePage() {
                   <TrendingUp className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="font-mono text-[10px] font-bold text-slate-400 block">Active Community</span>
-                  <span className="font-mono text-xs font-bold text-white">50+ Placed Mentors</span>
+                  <span className="text-[10px] font-bold text-slate-400 block">Active Community</span>
+                  <span className="text-xs font-bold text-white">50+ Placed Mentors</span>
                 </div>
               </div>
 
@@ -219,7 +219,7 @@ export default function HomePage() {
       {/* Grayscale Corporate Logo Cloud */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
-          <p className="text-center font-mono text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-4">
+          <p className="text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-4">
             GLIM Gurgaon HR Alumni Placed Across Top Global Firms
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-60 font-['Outfit'] font-extrabold text-lg text-slate-700">
@@ -238,7 +238,7 @@ export default function HomePage() {
         <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="space-y-2">
-              <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 font-mono text-xs font-bold text-[#5850ec]">
+              <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
                 Core Capabilities
               </span>
               <h2 className="font-['Outfit'] text-3xl font-extrabold sm:text-4xl text-slate-900">
@@ -248,7 +248,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/vault"
-              className="inline-flex items-center gap-2 rounded-full bg-[#5850ec] px-6 py-3 font-mono text-xs font-bold text-white shadow-md hover:bg-[#4b44dc]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#5850ec] px-6 py-3 text-xs font-bold text-white shadow-md hover:bg-[#4b44dc]"
             >
               <span>Explore All Practice Hubs</span>
               <ArrowRight className="h-4 w-4" />
@@ -267,7 +267,7 @@ export default function HomePage() {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Round-by-round framework breakdowns for HR, Case, Psychometric, and GD rounds.
               </p>
-              <Link href="/interview-prep" className="inline-block font-mono text-xs font-bold text-[#5850ec] hover:underline">
+              <Link href="/interview-prep" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
                 Access Guide →
               </Link>
             </div>
@@ -282,7 +282,7 @@ export default function HomePage() {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Direct contact directory of placed GLIM alumni across top HR firms & consultancies.
               </p>
-              <Link href="/alumni" className="inline-block font-mono text-xs font-bold text-[#5850ec] hover:underline">
+              <Link href="/alumni" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
                 View Alumni →
               </Link>
             </div>
@@ -297,7 +297,7 @@ export default function HomePage() {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Daily real-world HR dilemmas designed to test executive judgment and strategic reasoning.
               </p>
-              <Link href="/vault" className="inline-block font-mono text-xs font-bold text-[#5850ec] hover:underline">
+              <Link href="/vault" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
                 Practice Cases →
               </Link>
             </div>
@@ -309,7 +309,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#5850ec]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#5850ec]">
               Interactive Judgment Engine
             </span>
             <h2 className="font-['Outfit'] text-3xl font-extrabold text-slate-900 mt-1">
@@ -318,7 +318,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/vault"
-            className="font-mono text-xs font-bold text-[#5850ec] hover:underline"
+            className="text-xs font-bold text-[#5850ec] hover:underline"
           >
             View All Past Cases →
           </Link>
@@ -330,7 +330,7 @@ export default function HomePage() {
       {/* ZaiHR Light Bento Section ("01", "02", "03" Watermark Grid) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 font-mono text-xs font-bold text-[#5850ec]">
+          <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
             Ecosystem Directory
           </span>
           <h2 className="font-['Outfit'] text-3xl font-extrabold text-slate-900 mt-2">
@@ -354,7 +354,7 @@ export default function HomePage() {
           <div className="grid gap-8 lg:grid-cols-12 items-center">
             
             <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#5850ec]/10 px-3.5 py-1 font-mono text-xs font-bold text-[#5850ec]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
                 <Building2 className="h-3.5 w-3.5" />
                 <span>For Recruiters & Alumni</span>
               </div>

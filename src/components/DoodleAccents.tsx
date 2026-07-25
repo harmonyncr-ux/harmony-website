@@ -1,16 +1,25 @@
-export function UnderlineDoodle({ className = "h-3 text-indigo-400" }: { className?: string }) {
+export function UnderlineDoodle({ className = "" }: { className?: string }) {
   return (
     <svg
-      className={`w-full ${className}`}
+      className={`w-full h-3 sm:h-4 ${className}`}
       viewBox="0 0 240 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="none"
     >
+      {/* Top curved line */}
       <path
-        d="M2.5 12.5C45 4.5 125 3.5 237.5 15C190 6.5 110 5.5 5 15.5"
+        d="M 2.5 4 C 45 1.5, 125 1.5, 237.5 3.5"
         stroke="currentColor"
-        strokeWidth="3.5"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Bottom curved line with distinct gap */}
+      <path
+        d="M 6 13.5 C 50 10.5, 130 10.5, 234 13"
+        stroke="currentColor"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

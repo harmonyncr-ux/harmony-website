@@ -82,7 +82,7 @@ export default function Header() {
                 <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? "text-white" : "text-slate-400"}`} />
                 <span className="whitespace-nowrap">{link.label}</span>
                 {link.badge && (
-                  <span className="ml-0.5 rounded-full bg-red-500/10 px-1.5 py-0.2 font-mono text-[9px] font-bold text-red-500 border border-red-500/20 whitespace-nowrap">
+                  <span className="ml-0.5 rounded-full bg-red-500/10 px-1.5 py-0.2 text-[9px] font-bold text-red-500 border border-red-500/20 whitespace-nowrap">
                     {link.badge}
                   </span>
                 )}

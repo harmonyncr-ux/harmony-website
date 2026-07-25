@@ -39,6 +39,9 @@ This document serves as the single source of truth for the **Harmony HR Club Web
 - **Animations**: Framer Motion (`motion/react`) + `canvas-confetti`
 - **Database & Cloud Storage**: Supabase JS SDK (`@supabase/supabase-js`)
 - **State & Data Store**: Dual-mode reactive store (`src/lib/adminStore.ts`) featuring `useHarmonyStore()` custom React hook — live cloud sync with background hydration and instant `localStorage` cache fallback.
+- **Automated Live Data Feeds**:
+  - 🏆 **Live Unstop Case Competitions API** (`/api/case-comps`): Direct real-time fetch from Unstop's public API (`oppstatus=open`). Fetches exact competition titles, direct Unstop registration links, prize pools, deadlines, and categories. 1-hour server revalidation + manual `[Refresh]`.
+  - 🗞️ **Live HR News Feed API** (`/api/hr-news`): Real-time ingestion from Google News RSS & Economic Times feeds (`force-dynamic`, revalidate = 0). Resolves article URLs in parallel, fetches `og:image` thumbnails (with high-res category image fallbacks), and formats 6 live cards. Instant `[Refresh]`.
 
 ---
 
@@ -76,22 +79,24 @@ This document serves as the single source of truth for the **Harmony HR Club Web
 
 ---
 
-## 🌐 100% Dynamically Linked Routes (15 Routes Total)
+## 🌐 Dynamically Linked & Automated Routes (17 Routes Total)
 
-| Route | Page Purpose | Admin & Cloud Linked? |
+| Route | Page Purpose | Data & Integration Type |
 |---|---|---|
-| `/` | Homepage & Hero Banner | Yes |
-| `/vault` | The Vault Daily HR Dilemmas | Yes (`vault_cases`) |
-| `/interview-prep` | Round-by-Round Interview Guide | Yes |
-| `/alumni` | Alumni Connect Network | Yes (`alumni`) |
-| `/hr-news` | HR News & Market Intelligence | Yes (`hr_news`) |
-| `/case-comps` | MBA Case Competitions Hub | Yes (`case_comps`) |
-| `/cv-resources` | CV Vault & ATS Templates | Yes (`cv_templates` + CDN files) |
-| `/newsletter` | Monthly Newsletter Archive | Yes (`newsletters` + CDN PDFs) |
-| `/events` | Campus Keynotes & Workshops | Yes (`events`) |
-| `/college-updates` | GLIM Campus Notice Board | Yes (`announcements`) |
-| `/team` | Executive Board & Faculty Mentor | Yes (`team_members`) |
-| `/admin` | Committee Admin Dashboard | Yes |
+| `/` | Homepage & Hero Banner | Dynamic Store |
+| `/vault` | The Vault Daily HR Dilemmas | Dynamic Store (`vault_cases`) |
+| `/interview-prep` | Round-by-Round Interview Guide | Dynamic Store |
+| `/alumni` | Alumni Connect Network | Dynamic Store (`alumni`) |
+| `/hr-news` | HR News & Market Intelligence | Live RSS Automated Feed (`/api/hr-news` with thumbnails, 6 cards) |
+| `/api/hr-news` | Live HR News API Endpoint | 15-min cached RSS parser with image extraction |
+| `/case-comps` | MBA Case Competitions Hub | Live Unstop API Feed (`/api/case-comps`, 10+ cards) |
+| `/api/case-comps` | Live Case Comps API Endpoint | 1-hr cached direct Unstop Public API integration |
+| `/cv-resources` | CV Vault & ATS Templates | Dynamic Store (`cv_templates` + CDN files) |
+| `/newsletter` | Monthly Newsletter Archive | Dynamic Store (`newsletters` + CDN PDFs) |
+| `/events` | Campus Keynotes & Workshops | Dynamic Store (`events`) |
+| `/college-updates` | GLIM Campus Notice Board | Dynamic Store (`announcements`) |
+| `/team` | Executive Board & Faculty Mentor | Dynamic Store (`team_members`) |
+| `/admin` | Committee Admin Dashboard | Supabase Cloud Sync & File Upload Engine |
 
 ---
 
@@ -109,11 +114,14 @@ e:/ALL CLAUDE/HARMONY WEBSITE/
 │   │   ├── globals.css          # Theme Tokens & ZaiHR Utilities
 │   │   ├── admin/page.tsx       # Admin Dashboard with Cloud DB Badge & File Uploads
 │   │   ├── alumni/page.tsx      # Alumni Connect Directory (Cloud Hydrated)
-│   │   ├── case-comps/page.tsx  # MBA Case Competitions Hub (Cloud Hydrated)
+│   │   ├── api/
+│   │   │   ├── case-comps/route.ts # Live Unstop Public API Competitions Route
+│   │   │   └── hr-news/route.ts    # Live Google News RSS HR Feed with Thumbnails
+│   │   ├── case-comps/page.tsx  # MBA Case Competitions Hub (Live Unstop Feed)
 │   │   ├── college-updates/page.tsx # Campus Notice Board (Cloud Hydrated)
 │   │   ├── cv-resources/page.tsx # Resume Templates & ATS Guide (Live Downloads)
 │   │   ├── events/page.tsx      # Campus Keynotes & Workshops (Cloud Hydrated)
-│   │   ├── hr-news/page.tsx     # Regulatory & Market HR News (Cloud Hydrated)
+│   │   ├── hr-news/page.tsx     # Regulatory & Market HR News (Live RSS Feed + 6 Thumbnail Cards)
 │   │   ├── interview-prep/page.tsx # Round-by-Round Interview Guide
 │   │   ├── newsletter/page.tsx  # Monthly Newsletter Archive (Live PDF Downloads)
 │   │   ├── team/page.tsx        # Executive Board & Faculty Advisor (Cloud Hydrated)

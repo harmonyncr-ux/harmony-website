@@ -85,7 +85,7 @@ export default function BentoSectionCard({
             </div>
 
             {badge && (
-              <span className="rounded-full bg-[#5850ec]/10 px-3 py-1 font-mono text-[10px] font-bold text-[#5850ec]">
+              <span className="rounded-full bg-[#5850ec]/10 px-3 py-1 text-[10px] font-bold text-[#5850ec]">
                 {badge}
               </span>
             )}
@@ -93,7 +93,7 @@ export default function BentoSectionCard({
 
           {/* Category Pill */}
           <div className="mt-5">
-            <span className="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <span className="rounded-md bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
               {category}
             </span>
           </div>
@@ -113,7 +113,7 @@ export default function BentoSectionCard({
         <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
           <Link
             href={href}
-            className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-white transition-all hover:bg-[#5850ec] group-hover:shadow-md group-hover:shadow-[#5850ec]/20"
+            className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-xs font-bold text-white transition-all hover:bg-[#5850ec] group-hover:shadow-md group-hover:shadow-[#5850ec]/20"
           >
             <span>Explore Hub</span>
             <ArrowUpRight className="h-3.5 w-3.5 text-slate-400 group-hover:text-white" />
