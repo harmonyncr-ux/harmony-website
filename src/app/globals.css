@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-outfit: 'Outfit', system-ui, sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-jakarta);
+    background-color: #f8fafc;
+    color: #0f172a;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ZaiHR Light Theme Utility Classes */
+.bg-zai-indigo {
+  background-color: #5850ec;
+}
+
+.hover\:bg-zai-indigo-hover:hover {
+  background-color: #4b44dc;
+}
+
+.text-zai-indigo {
+  color: #5850ec;
+}
+
+.border-zai-indigo {
+  border-color: #5850ec;
+}
+
+.pill-shadow {
+  box-shadow: 0 10px 25px -5px rgba(88, 80, 236, 0.25);
+}
+
+.card-shadow {
+  box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.05);
+}
+
+/* Custom Light Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5850ec;
+}
