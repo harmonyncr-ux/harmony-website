@@ -15,6 +15,22 @@ This document serves as the single source of truth for the **Harmony HR Club Web
 
 ---
 
+## 🔑 Project Credentials & Handover Keys
+
+> [!IMPORTANT]
+> The credentials below allow incoming student committee leads to access, manage, and deploy the Harmony HR Club platform.
+
+| Resource / Portal | Parameter | Value / Access Info |
+|---|---|---|
+| **Admin Portal Passcode** | `/admin` Passcode | **`harmony2026`** (or `glim2026`) |
+| **Official GitHub Account** | Username / Org | **`harmonyncr-ux`** |
+| **GitHub Repository** | HTTPS URL | `https://github.com/harmonyncr-ux/harmony-website.git` |
+| **Supabase Project URL** | `NEXT_PUBLIC_SUPABASE_URL` | `https://iqtaatiwrbysjzozpdji.supabase.co` |
+| **Supabase Anon Public Key** | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxdGFhdGl3cmJ5c2p6b3pwZGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5NDMxMzAsImV4cCI6MjEwMDUxOTEzMH0.OUljiaIqhjb_IP1SJrq_kZdFyuo4Ci54MGFW2OdlDoA` |
+| **Supabase Storage Bucket** | Bucket Name | `harmony-files` (Public Read/Write) |
+
+---
+
 ## 🛠️ Technology Stack
 - **Framework**: Next.js 16 (App Router, Turbopack)
 - **Language**: TypeScript (`.tsx` / `.ts`)
@@ -128,7 +144,7 @@ Create `.env.local` locally and add these in Vercel settings:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://iqtaatiwrbysjzozpdji.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxdGFhdGl3cmJ5c2p6b3pwZGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5NDMxMzAsImV4cCI6MjEwMDUxOTEzMH0.OUljiaIqhjb_IP1SJrq_kZdFyuo4Ci54MGFW2OdlDoA
 ```
 
 ---
