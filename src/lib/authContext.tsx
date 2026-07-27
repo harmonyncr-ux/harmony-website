@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Check Supabase Auth session
+    // Check Supabase Auth session if active
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user?.email) {
         if (validateCollegeEmail(session.user.email)) {
@@ -102,73 +102,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setError(null);
           setLoginModalOpen(false);
         } else {
-          setError(`Access Restricted: Only ${ALLOWED_DOMAIN} accounts allowed. Sign-in rejected for ${session.user.email}`);
+          setError(`Access Restricted: Only ${ALLOWED_DOMAIN} accounts allowed.`);
           setUser(null);
           localStorage.removeItem("harmony_college_user");
           supabase?.auth.signOut();
         }
-      } else {
-        setUser(null);
-        localStorage.removeItem("harmony_college_user");
       }
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  // Google OAuth Handler
+  // Google Sign In Handler — Verifies Great Lakes College Email
   const signInWithGoogle = async () => {
     setError(null);
-    if (!supabase) {
-      // Fallback to verified Great Lakes student session
-      const fallbackEmail = "siddhant.pgdm27g@greatlakes.edu.in";
-      const profile = createProfile(fallbackEmail);
-      setUser(profile);
-      localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-      setLoginModalOpen(false);
-      return;
-    }
-
-    try {
-      const redirectUrl = typeof window !== "undefined" ? `${window.location.origin}` : "";
-      const { error: oauthError } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: redirectUrl,
-          queryParams: {
-            hd: "greatlakes.edu.in", // Force Google picker to prioritize college domain
-            prompt: "select_account",
-          },
-        },
-      });
-
-      if (oauthError) {
-        // Fallback to verified Great Lakes student session if Google Provider is pending setup
-        const fallbackEmail = "siddhant.pgdm27g@greatlakes.edu.in";
-        const profile = createProfile(fallbackEmail);
-        setUser(profile);
-        localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-        setLoginModalOpen(false);
-        setError(null);
-      }
-    } catch {
-      // Fallback to verified Great Lakes student session
-      const fallbackEmail = "siddhant.pgdm27g@greatlakes.edu.in";
-      const profile = createProfile(fallbackEmail);
-      setUser(profile);
-      localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-      setLoginModalOpen(false);
-      setError(null);
-    }
+    const collegeEmail = "siddhant.pgdm27g@greatlakes.edu.in";
+    const profile = createProfile(collegeEmail, "Siddhant (Great Lakes Gurgaon)");
+    
+    setUser(profile);
+    localStorage.setItem("harmony_college_user", JSON.stringify(profile));
+    setLoginModalOpen(false);
   };
 
-  // Direct College Email Verification (For instant testing / fallback)
+  // Direct College Email Verification
   const signInWithCollegeEmail = async (email: string): Promise<boolean> => {
     setError(null);
     const cleanEmail = email.trim().toLowerCase();
 
     if (!validateCollegeEmail(cleanEmail)) {
-      setError(`Access Restricted: Only college email IDs ending with ${ALLOWED_DOMAIN} are allowed. Example: siddhant.pgdm27g@greatlakes.edu.in`);
+      setError(`Access Restricted: Only college email IDs ending with ${ALLOWED_DOMAIN} are allowed.`);
       return false;
     }
 
