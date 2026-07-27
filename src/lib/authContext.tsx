@@ -49,82 +49,101 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   };
 
-  // Initial session check
-  useEffect(() => {
-    // Check localStorage for saved session first
-    const savedUserJson = typeof window !== "undefined" ? localStorage.getItem("harmony_college_user") : null;
-    if (savedUserJson) {
-      try {
-        const parsed = JSON.parse(savedUserJson);
-        if (validateCollegeEmail(parsed.email)) {
-          setUser(parsed);
+  // Process and validate Supabase auth session
+  const processSession = async (session: { user?: { email?: string; user_metadata?: { full_name?: string; name?: string; avatar_url?: string } } } | null) => {
+    if (session?.user?.email) {
+      if (validateCollegeEmail(session.user.email)) {
+        const profile = createProfile(
+          session.user.email,
+          session.user.user_metadata?.full_name || session.user.user_metadata?.name,
+          session.user.user_metadata?.avatar_url
+        );
+        setUser(profile);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("harmony_college_user", JSON.stringify(profile));
         }
-      } catch {
-        localStorage.removeItem("harmony_college_user");
+        setError(null);
+        setLoginModalOpen(false);
+      } else {
+        setError(`Access restricted. Only ${ALLOWED_DOMAIN} college email accounts can access this platform.`);
+        setUser(null);
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("harmony_college_user");
+        }
+        if (supabase) {
+          await supabase.auth.signOut();
+        }
+      }
+    } else {
+      if (supabase) {
+        setUser(null);
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("harmony_college_user");
+        }
       }
     }
+  };
 
+  // Initial session check & auth state subscription
+  useEffect(() => {
     if (!supabase) {
+      // If Supabase is disabled, check localStorage fallback
+      const savedUserJson = typeof window !== "undefined" ? localStorage.getItem("harmony_college_user") : null;
+      if (savedUserJson) {
+        try {
+          const parsed = JSON.parse(savedUserJson);
+          if (validateCollegeEmail(parsed.email)) {
+            setUser(parsed);
+          } else {
+            localStorage.removeItem("harmony_college_user");
+          }
+        } catch {
+          localStorage.removeItem("harmony_college_user");
+        }
+      }
       setLoading(false);
       return;
     }
 
     // Check Supabase Auth session if active
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user?.email) {
-        if (validateCollegeEmail(session.user.email)) {
-          const profile = createProfile(
-            session.user.email,
-            session.user.user_metadata?.full_name || session.user.user_metadata?.name,
-            session.user.user_metadata?.avatar_url
-          );
-          setUser(profile);
-          localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-        } else {
-          setError(`Access restricted. Only ${ALLOWED_DOMAIN} college email accounts can access this platform.`);
-          supabase?.auth.signOut();
-        }
-      }
+      processSession(session);
       setLoading(false);
     });
 
     // Listen to Auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user?.email) {
-        if (validateCollegeEmail(session.user.email)) {
-          const profile = createProfile(
-            session.user.email,
-            session.user.user_metadata?.full_name || session.user.user_metadata?.name,
-            session.user.user_metadata?.avatar_url
-          );
-          setUser(profile);
-          localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-          setError(null);
-          setLoginModalOpen(false);
-        } else {
-          setError(`Access Restricted: Only ${ALLOWED_DOMAIN} accounts allowed.`);
-          setUser(null);
-          localStorage.removeItem("harmony_college_user");
-          supabase?.auth.signOut();
-        }
-      }
+      processSession(session);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  // Google Sign In Handler — Verifies Great Lakes College Email
+  // Google Sign In Handler — Verifies Great Lakes College Email via Supabase OAuth
   const signInWithGoogle = async () => {
     setError(null);
-    const collegeEmail = "siddhant.pgdm27g@greatlakes.edu.in";
-    const profile = createProfile(collegeEmail, "Siddhant (Great Lakes Gurgaon)");
-    
-    setUser(profile);
-    localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-    setLoginModalOpen(false);
+    if (!supabase) {
+      setError("Authentication service is currently unavailable.");
+      return;
+    }
+
+    const redirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo,
+        queryParams: {
+          hd: "greatlakes.edu.in",
+        },
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+    }
   };
 
-  // Direct College Email Verification
+  // Direct College Email Verification via Supabase OTP / Magic Link
   const signInWithCollegeEmail = async (email: string): Promise<boolean> => {
     setError(null);
     const cleanEmail = email.trim().toLowerCase();
@@ -134,10 +153,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return false;
     }
 
-    const profile = createProfile(cleanEmail);
-    setUser(profile);
-    localStorage.setItem("harmony_college_user", JSON.stringify(profile));
-    setLoginModalOpen(false);
+    if (!supabase) {
+      setError("Authentication service is currently unavailable.");
+      return false;
+    }
+
+    const redirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
+    const { error } = await supabase.auth.signInWithOtp({
+      email: cleanEmail,
+      options: {
+        emailRedirectTo: redirectTo,
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+      return false;
+    }
+
     return true;
   };
 
@@ -146,7 +179,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await supabase.auth.signOut();
     }
     setUser(null);
-    localStorage.removeItem("harmony_college_user");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("harmony_college_user");
+    }
   };
 
   const clearError = () => setError(null);
