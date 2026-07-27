@@ -139,7 +139,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (error) {
-      setError(error.message);
+      if (error.message.toLowerCase().includes("provider is not enabled") || error.message.toLowerCase().includes("unsupported provider")) {
+        setError("Google Auth is not enabled in your Supabase Dashboard. Please enable the Google Provider under Supabase Dashboard -> Authentication -> Providers.");
+      } else {
+        setError(error.message);
+      }
     }
   };
 
