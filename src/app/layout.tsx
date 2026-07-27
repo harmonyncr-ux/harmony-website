@@ -3,6 +3,8 @@ import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/lib/authContext";
+import AuthModal from "@/components/AuthModal";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -35,9 +37,12 @@ export default function RootLayout({
       className={`${outfit.variable} ${jakarta.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-[#f8fafc] text-slate-900 antialiased selection:bg-[#5850ec]/20 selection:text-[#5850ec]">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <AuthModal />
+        </AuthProvider>
       </body>
     </html>
   );

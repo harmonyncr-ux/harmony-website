@@ -1,8 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import HrDilemmaSimulator from "@/components/HrDilemmaSimulator";
 import BentoSectionCard, { IconName } from "@/components/BentoSectionCard";
+import MagicBento from "@/components/MagicBento/MagicBento";
 import { UnderlineDoodle, ArrowDoodle } from "@/components/DoodleAccents";
+import {
+  AnimatedSection,
+  AnimatedBadge,
+  AnimatedHeading,
+  StaggerContainer,
+  StaggerItem,
+  FloatingElement,
+} from "@/components/AnimatedSection";
 import { 
   Sparkles,
   ArrowRight,
@@ -11,7 +24,17 @@ import {
   TrendingUp,
   BookOpen,
   GraduationCap,
-  ShieldAlert
+  ShieldAlert,
+  Flame,
+  CheckCircle2,
+  Users,
+  Trophy,
+  FileText,
+  Briefcase,
+  Star,
+  Award,
+  Zap,
+  ArrowUpRight
 } from "lucide-react";
 
 interface BentoSection {
@@ -113,202 +136,369 @@ const bentoSections: BentoSection[] = [
 ];
 
 export default function HomePage() {
+  const [heroOption, setHeroOption] = useState<string>("a");
+  const [heroVoted, setHeroVoted] = useState<boolean>(false);
+
   return (
     <div className="space-y-20 pb-20 bg-[#f8fafc]">
       
-      {/* ZaiHR Hero Section (100% Light Theme) */}
-      <section className="relative overflow-hidden bg-[#f8fafc] pt-12 pb-20 text-slate-900">
+      {/* ─────────────────────────────────────────────────────────────
+          1. HERO SECTION: Dynamic Split Grid + Interactive Case Widget
+         ───────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#f8fafc] pt-10 pb-20 text-slate-900">
+        
+        {/* Ambient Glowing Background Orbs & Dots */}
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-32 left-1/4 h-[650px] w-[950px] rounded-full bg-gradient-to-tr from-[#5850ec]/15 via-indigo-400/10 to-purple-500/15 blur-3xl" />
+          <div className="absolute top-40 -right-20 h-96 w-96 rounded-full bg-blue-400/15 blur-3xl animate-float" />
+          <div className="absolute bottom-10 left-10 h-80 w-80 rounded-full bg-[#5850ec]/10 blur-3xl animate-float-delayed" />
+          <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
+        </div>
         
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
             
-            {/* Main ZaiHR Headline */}
-            <div className="relative">
-              <h1 className="font-['Outfit'] text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl leading-[1.08]">
-                Empower Your HR Strategy, <br />
-                Discover Your <span className="relative inline-block text-[#5850ec]">
-                  Ideal Leadership
-                  <UnderlineDoodle className="absolute top-[88%] left-0 text-[#5850ec] pointer-events-none" />
-                </span>
-              </h1>
-            </div>
-
-            {/* Subtext */}
-            <p className="text-base text-slate-600 sm:text-lg leading-relaxed max-w-2xl font-normal pt-2">
-              Harmony bridges the gap between academic theory and real-world HR executive decision-making. Practice daily case dilemmas, access interview prep banks, and connect with top alumni.
-            </p>
-
-            {/* Double Periwinkle Pill CTAs + Arrow Doodle */}
-            <div className="relative flex flex-wrap items-center justify-center gap-4 pt-4">
-              <Link
-                href="/vault"
-                className="flex items-center gap-2.5 rounded-full bg-[#5850ec] px-8 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#5850ec]/30 transition-all hover:bg-[#4b44dc] hover:scale-105 active:scale-95"
-              >
-                <Sparkles className="h-4 w-4 text-indigo-100" />
-                <span>Practice Daily Dilemma</span>
-              </Link>
-
-              <Link
-                href="/interview-prep"
-                className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-8 py-3.5 text-sm font-semibold text-slate-800 transition-all hover:border-slate-400 hover:bg-slate-50"
-              >
-                <span>Interview Prep Bank</span>
-              </Link>
-
-              {/* Hand-drawn Loop Arrow Doodle */}
-              <div className="absolute -right-12 -bottom-8 hidden md:block">
-                <ArrowDoodle className="h-10 w-10 text-[#5850ec] rotate-45" />
-              </div>
-            </div>
-
-          </div>
-
-          {/* Hero Image Framed Container (Featuring Official GL GGN Harmony Logo) */}
-          <div className="relative mt-16 mx-auto max-w-5xl rounded-3xl border-4 border-slate-200 bg-white p-4 sm:p-6 shadow-2xl overflow-hidden">
-            
-            <div className="relative h-[320px] sm:h-[400px] w-full rounded-2xl bg-slate-900 flex items-center justify-center overflow-hidden border border-slate-800 shadow-inner">
+            {/* LEFT COLUMN: High Impact Copy & CTAs */}
+            <div className="lg:col-span-7 space-y-7 text-left">
               
-              <div className="relative z-10 text-center space-y-4 p-6">
-                <div className="mx-auto flex justify-center">
-                  <Image 
-                    src="/GL GGN_harmony.png" 
-                    alt="Great Lakes Gurgaon Harmony Official Logo" 
-                    width={360}
-                    height={120}
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+              {/* Live Status Eyebrow Badge */}
+              <AnimatedBadge delay={0.05}>
+                <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-[#5850ec]/30 bg-white/90 backdrop-blur-md px-4 py-1.5 text-xs font-semibold text-slate-800 shadow-md shadow-[#5850ec]/5">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-[#5850ec] animate-ping" />
+                  <span className="text-[#5850ec] font-extrabold tracking-wider uppercase text-[11px]">GLIM Gurgaon HR Specialization</span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-slate-600 font-medium flex items-center gap-1">
+                    <Flame className="h-3.5 w-3.5 text-amber-500" />
+                    Case #042 Live
+                  </span>
                 </div>
+              </AnimatedBadge>
 
-                <h3 className="font-['Outfit'] text-2xl sm:text-3xl font-extrabold text-white">
-                  Harmony HR Practice Environment
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
-                  Over 100+ MBA HR Students active daily practicing case dilemmas, interview prep, and corporate compliance scenarios.
+              {/* Main Headline */}
+              <AnimatedHeading delay={0.15}>
+                <h1 className="font-['Outfit'] text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-[1.1]">
+                  Where Future HR Leaders <br />
+                  <span className="inline-block mt-1 bg-gradient-to-r from-[#5850ec] via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    Master Corporate Judgment.
+                  </span>
+                </h1>
+              </AnimatedHeading>
+
+              {/* High Context Subtext */}
+              <AnimatedSection delay={0.25}>
+                <p className="text-base text-slate-600 sm:text-lg leading-relaxed font-normal max-w-xl">
+                  Step into real boardroom scenarios. Practice daily HR dilemmas, access recruiter-vetted ATS resume formulas, and connect directly with placed GLIM alumni.
                 </p>
-              </div>
+              </AnimatedSection>
 
-              {/* Floating Badge 1 */}
-              <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900/90 p-3 shadow-lg backdrop-blur-md">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                  <CheckCircle className="h-5 w-5" />
+              {/* Feature Pills */}
+              <AnimatedSection delay={0.35}>
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {[
+                    { label: "Daily Case Vault", icon: ShieldAlert, color: "text-[#5850ec] bg-[#EEF2FF]" },
+                    { label: "Interview Prep Bank", icon: BookOpen, color: "text-blue-600 bg-blue-50" },
+                    { label: "ATS Resume formulas", icon: FileText, color: "text-emerald-600 bg-emerald-50" },
+                    { label: "50+ Alumni Network", icon: GraduationCap, color: "text-purple-600 bg-purple-50" },
+                  ].map((feat) => (
+                    <span
+                      key={feat.label}
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${feat.color} border border-slate-200/60`}
+                    >
+                      <feat.icon className="h-3.5 w-3.5" />
+                      <span>{feat.label}</span>
+                    </span>
+                  ))}
                 </div>
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 block">Interview Readiness</span>
-                  <span className="text-xs font-bold text-white">98% Benchmark Score</span>
-                </div>
-              </div>
+              </AnimatedSection>
 
-              {/* Floating Badge 2 */}
-              <div className="absolute bottom-6 right-6 hidden sm:flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900/90 p-3 shadow-lg backdrop-blur-md">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#5850ec]/20 text-[#5850ec] border border-[#5850ec]/30">
-                  <TrendingUp className="h-5 w-5" />
+              {/* Call to Action Buttons */}
+              <motion.div 
+                className="flex flex-wrap items-center gap-4 pt-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+              >
+                <Link
+                  href="/vault"
+                  className="group relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#5850ec] to-[#4b44dc] px-8 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#5850ec]/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-[#5850ec]/40 active:scale-95 overflow-hidden"
+                >
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                  <Sparkles className="h-4 w-4 text-indigo-100 relative z-10 animate-pulse" />
+                  <span className="relative z-10">Practice Today&apos;s Dilemma</span>
+                  <ArrowRight className="h-4 w-4 text-white relative z-10 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/interview-prep"
+                  className="flex items-center gap-2 rounded-full border border-slate-300 bg-white/90 backdrop-blur-md px-7 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition-all hover:border-[#5850ec]/40 hover:bg-slate-50 hover:shadow"
+                >
+                  <span>Interview Prep Bank</span>
+                  <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                </Link>
+              </motion.div>
+
+              {/* Student Proof & Rating Bar */}
+              <AnimatedSection delay={0.55}>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-200/80 max-w-lg">
+                  {/* Avatar Stack */}
+                  <div className="flex -space-x-2 overflow-hidden">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#5850ec] text-xs font-bold text-white ring-2 ring-white">AM</div>
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white ring-2 ring-white">DL</div>
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white ring-2 ring-white">AC</div>
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-600 text-xs font-bold text-white ring-2 ring-white">AP</div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-1 text-amber-400">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} className="h-3.5 w-3.5 fill-current" />
+                      ))}
+                      <span className="ml-1 text-xs font-bold text-slate-800">4.9/5 Rating</span>
+                    </div>
+                    <p className="text-[11px] font-mono text-slate-500">
+                      100+ Active GLIM HR MBA Students & Placed Alumni
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 block">Active Community</span>
-                  <span className="text-xs font-bold text-white">50+ Placed Mentors</span>
-                </div>
-              </div>
+              </AnimatedSection>
 
             </div>
+
+            {/* RIGHT COLUMN: Interactive Live Dilemma Teaser Card + Floating Glass Badges */}
+            <div className="lg:col-span-5 relative">
+              
+              <AnimatedSection animation="scale-up" delay={0.35} duration={0.6}>
+                
+                {/* Main Glassmorphic Interactive Dilemma Widget */}
+                <div className="relative rounded-3xl border border-white/80 bg-white/90 p-6 sm:p-7 shadow-2xl shadow-slate-900/10 backdrop-blur-2xl ring-1 ring-slate-900/5 overflow-hidden">
+                  
+                  {/* Top Bar */}
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#5850ec]">
+                        <ShieldAlert className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-[#5850ec] uppercase tracking-wider block">Today&apos;s Executive Case</span>
+                        <span className="text-xs font-bold text-slate-900">Performance vs Culture</span>
+                      </div>
+                    </div>
+                    <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                      Live Vote
+                    </span>
+                  </div>
+
+                  {/* Dilemma Title & Scenario preview */}
+                  <div className="space-y-2 text-left mb-5">
+                    <h3 className="font-['Outfit'] text-base font-bold text-slate-900 leading-snug">
+                      The Star Performer vs. Team Morale Dilemma
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                      VP of Engineering demands immediate promotion for a top lead architect who hit 3 consecutive record quarters, despite 85% of her team reporting extreme demotivation. How do you intervene?
+                    </p>
+                  </div>
+
+                  {/* Interactive Options Preview */}
+                  <div className="space-y-2 text-left mb-5">
+                    {[
+                      { id: "a", label: "Option A: Conditional Promotion + Executive Coaching", votes: "52%" },
+                      { id: "b", label: "Option B: Defer Promotion + Clear Culture Gates", votes: "24%" },
+                      { id: "c", label: "Option C: Dual-Track Career Path (Principal IC)", votes: "18%" },
+                    ].map((opt) => (
+                      <button
+                        key={opt.id}
+                        onClick={() => {
+                          setHeroOption(opt.id);
+                          setHeroVoted(true);
+                        }}
+                        className={`w-full text-left rounded-xl p-3 text-xs transition-all border ${
+                          heroOption === opt.id
+                            ? "border-[#5850ec] bg-[#EEF2FF]/80 font-semibold text-slate-900 shadow-sm"
+                            : "border-slate-200/80 bg-slate-50/70 hover:border-slate-300 text-slate-700"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="line-clamp-1">{opt.label}</span>
+                          {heroVoted && (
+                            <span className="font-mono text-[10px] font-bold text-[#5850ec] shrink-0 ml-2">
+                              {opt.votes}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Progress Bar when voted */}
+                        {heroVoted && (
+                          <div className="mt-1.5 h-1.5 w-full rounded-full bg-slate-200/80 overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: opt.votes }}
+                              transition={{ duration: 0.8, ease: "easeOut" }}
+                              className="h-full bg-[#5850ec] rounded-full"
+                            />
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Card Action CTA */}
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span className="text-[11px] font-mono text-slate-500">142 Student Solvers</span>
+                    <Link
+                      href="/vault"
+                      className="inline-flex items-center gap-1.5 font-bold text-[#5850ec] hover:underline"
+                    >
+                      <span>Solve Full Case</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+
+                </div>
+
+              </AnimatedSection>
+
+              {/* Floating Glass Badge 1: ATS Resume Score Widget (Top-Right Overflow) */}
+              <FloatingElement className="absolute -top-6 -right-6 hidden sm:block z-20" delay={0.6} y={6} duration={4}>
+                <div className="flex items-center gap-3 rounded-2xl border border-white/90 bg-white/90 p-3.5 shadow-xl backdrop-blur-xl ring-1 ring-slate-900/5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 font-bold font-mono text-xs">
+                    96%
+                  </div>
+                  <div className="text-left">
+                    <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase">ATS Resume Vault</span>
+                    <span className="text-xs font-bold text-slate-900">Vetted HR Formulas</span>
+                  </div>
+                </div>
+              </FloatingElement>
+
+              {/* Floating Glass Badge 2: Alumni Mentor Widget (Bottom-Left Overflow) */}
+              <FloatingElement className="absolute -bottom-6 -left-6 hidden sm:block z-20" delay={0.8} y={6} duration={3.6}>
+                <div className="flex items-center gap-3 rounded-2xl border border-white/90 bg-white/90 p-3.5 shadow-xl backdrop-blur-xl ring-1 ring-slate-900/5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5850ec] text-white font-bold font-['Outfit'] text-xs">
+                    GL
+                  </div>
+                  <div className="text-left">
+                    <span className="text-[10px] font-mono font-bold text-[#5850ec] block uppercase">Alumni Directory</span>
+                    <span className="text-xs font-bold text-slate-900">50+ Placed HR Mentors</span>
+                  </div>
+                </div>
+              </FloatingElement>
+
+            </div>
+
           </div>
 
         </div>
       </section>
 
-      {/* Grayscale Corporate Logo Cloud */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* ─────────────────────────────────────────────────────────────
+          2. CORPORATE ALUMNI LOGO CLOUD (Refined Grayscale)
+         ───────────────────────────────────────────────────────────── */}
+      <AnimatedSection className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
           <p className="text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-4">
             GLIM Gurgaon HR Alumni Placed Across Top Global Firms
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-60 font-['Outfit'] font-extrabold text-lg text-slate-700">
-            <span>Amazon</span>
-            <span>Deloitte</span>
-            <span>Accenture</span>
-            <span>Asian Paints</span>
-            <span>TCS Global</span>
-            <span>Flipkart</span>
-          </div>
+          <StaggerContainer className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-60 font-['Outfit'] font-extrabold text-lg text-slate-700" stagger={0.1}>
+            {["Amazon", "Deloitte", "Accenture", "Asian Paints", "TCS Global", "Flipkart", "Tech Mahindra"].map((name) => (
+              <StaggerItem key={name}>
+                <span className="hover:text-[#5850ec] hover:opacity-100 transition-all cursor-default">{name}</span>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Light Capability Section ("Dive Deep Into Our HR Expertise") */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* ─────────────────────────────────────────────────────────────
+          3. CORE CAPABILITIES (3 Elevated Light Cards)
+         ───────────────────────────────────────────────────────────── */}
+      <AnimatedSection className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-            <div className="space-y-2">
-              <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
-                Core Capabilities
-              </span>
-              <h2 className="font-['Outfit'] text-3xl font-extrabold sm:text-4xl text-slate-900">
-                Dive Deep Into Our HR Expertise, <br />
-                <span className="text-[#5850ec]">Explore All Our Hubs</span>
-              </h2>
-            </div>
-            <Link
-              href="/vault"
-              className="inline-flex items-center gap-2 rounded-full bg-[#5850ec] px-6 py-3 text-xs font-bold text-white shadow-md hover:bg-[#4b44dc]"
-            >
-              <span>Explore All Practice Hubs</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <AnimatedSection delay={0.1}>
+              <div className="space-y-2 text-left">
+                <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
+                  Core Capabilities
+                </span>
+                <h2 className="font-['Outfit'] text-3xl font-extrabold sm:text-4xl text-slate-900">
+                  Dive Deep Into Our HR Expertise, <br />
+                  <span className="text-[#5850ec]">Explore All Our Hubs</span>
+                </h2>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
+              <Link
+                href="/vault"
+                className="inline-flex items-center gap-2 rounded-full bg-[#5850ec] px-6 py-3 text-xs font-bold text-white shadow-md hover:bg-[#4b44dc]"
+              >
+                <span>Explore All Practice Hubs</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </AnimatedSection>
           </div>
 
-          {/* 3 Elevated Light Cards */}
-          <div className="grid gap-6 sm:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 space-y-4 hover:border-[#5850ec]/40 hover:bg-white hover:shadow-lg transition-all">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#5850ec]">
-                <BookOpen className="h-6 w-6" />
+          {/* 3 Elevated Light Cards — staggered */}
+          <StaggerContainer className="grid gap-6 sm:grid-cols-3" stagger={0.12}>
+            <StaggerItem>
+              <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 space-y-4 hover:border-[#5850ec]/40 hover:bg-white hover:shadow-lg transition-all text-left">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#5850ec]">
+                  <BookOpen className="h-6 w-6" />
+                </div>
+                <h3 className="font-['Outfit'] text-xl font-bold text-slate-900">
+                  Interview Prep Bank
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Round-by-round framework breakdowns for HR, Case, Psychometric, and GD rounds.
+                </p>
+                <Link href="/interview-prep" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
+                  Access Guide →
+                </Link>
               </div>
-              <h3 className="font-['Outfit'] text-xl font-bold text-slate-900">
-                Interview Prep Bank
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Round-by-round framework breakdowns for HR, Case, Psychometric, and GD rounds.
-              </p>
-              <Link href="/interview-prep" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
-                Access Guide →
-              </Link>
-            </div>
+            </StaggerItem>
 
-            <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 space-y-4 hover:border-[#5850ec]/40 hover:bg-white hover:shadow-lg transition-all">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#5850ec]">
-                <GraduationCap className="h-6 w-6" />
+            <StaggerItem>
+              <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 space-y-4 hover:border-[#5850ec]/40 hover:bg-white hover:shadow-lg transition-all text-left">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#5850ec]">
+                  <GraduationCap className="h-6 w-6" />
+                </div>
+                <h3 className="font-['Outfit'] text-xl font-bold text-slate-900">
+                  Alumni Connect
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Direct contact directory of placed GLIM alumni across top HR firms & consultancies.
+                </p>
+                <Link href="/alumni" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
+                  View Alumni →
+                </Link>
               </div>
-              <h3 className="font-['Outfit'] text-xl font-bold text-slate-900">
-                Alumni Connect
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Direct contact directory of placed GLIM alumni across top HR firms & consultancies.
-              </p>
-              <Link href="/alumni" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
-                View Alumni →
-              </Link>
-            </div>
+            </StaggerItem>
 
-            <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 space-y-4 hover:border-[#5850ec]/40 hover:bg-white hover:shadow-lg transition-all">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#5850ec]">
-                <ShieldAlert className="h-6 w-6" />
+            <StaggerItem>
+              <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 space-y-4 hover:border-[#5850ec]/40 hover:bg-white hover:shadow-lg transition-all text-left">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#5850ec]">
+                  <ShieldAlert className="h-6 w-6" />
+                </div>
+                <h3 className="font-['Outfit'] text-xl font-bold text-slate-900">
+                  The Vault Cases
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Daily real-world HR dilemmas designed to test executive judgment and strategic reasoning.
+                </p>
+                <Link href="/vault" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
+                  Practice Cases →
+                </Link>
               </div>
-              <h3 className="font-['Outfit'] text-xl font-bold text-slate-900">
-                The Vault Cases
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Daily real-world HR dilemmas designed to test executive judgment and strategic reasoning.
-              </p>
-              <Link href="/vault" className="inline-block text-xs font-bold text-[#5850ec] hover:underline">
-                Practice Cases →
-              </Link>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Signature Feature: Daily Dilemma Simulator */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* ─────────────────────────────────────────────────────────────
+          4. SIGNATURE FEATURE: Daily Dilemma Simulator Component
+         ───────────────────────────────────────────────────────────── */}
+      <AnimatedSection className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <div>
+          <div className="text-left">
             <span className="text-xs font-bold uppercase tracking-wider text-[#5850ec]">
               Interactive Judgment Engine
             </span>
@@ -325,13 +515,15 @@ export default function HomePage() {
         </div>
 
         <HrDilemmaSimulator />
-      </section>
+      </AnimatedSection>
 
-      {/* ZaiHR Light Bento Section ("01", "02", "03" Watermark Grid) */}
+      {/* ─────────────────────────────────────────────────────────────
+          5. BENTO SECTION: Ecosystem Directory Grid with MagicBento (01-06)
+         ───────────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
+        <AnimatedSection className="mb-8 text-left">
           <span className="rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
-            Ecosystem Directory
+            Interactive Ecosystem Directory
           </span>
           <h2 className="font-['Outfit'] text-3xl font-extrabold text-slate-900 mt-2">
             Explore All Practice Hubs
@@ -339,21 +531,30 @@ export default function HomePage() {
           <p className="mt-2 text-xs text-slate-600 max-w-xl">
             Everything you need for HR placement readiness, alumni networking, case competitions, and industry news in one structured workspace.
           </p>
-        </div>
+        </AnimatedSection>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {bentoSections.map((sec) => (
-            <BentoSectionCard key={sec.title} {...sec} />
-          ))}
-        </div>
+        <AnimatedSection delay={0.2}>
+          <MagicBento 
+            glowColor="88, 80, 236"
+            particleCount={12}
+            enableSpotlight={true}
+            enableStars={true}
+            enableBorderGlow={true}
+            enableTilt={true}
+            clickEffect={true}
+            enableMagnetism={true}
+          />
+        </AnimatedSection>
       </section>
 
-      {/* Recruiter & Alumni Gateway */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* ─────────────────────────────────────────────────────────────
+          6. RECRUITER & ALUMNI GATEWAY
+         ───────────────────────────────────────────────────────────── */}
+      <AnimatedSection className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-xl">
           <div className="grid gap-8 lg:grid-cols-12 items-center">
             
-            <div className="lg:col-span-7 space-y-4">
+            <AnimatedSection className="lg:col-span-7 space-y-4 text-left" animation="slide-right" delay={0.1}>
               <div className="inline-flex items-center gap-2 rounded-full bg-[#5850ec]/10 px-3.5 py-1 text-xs font-bold text-[#5850ec]">
                 <Building2 className="h-3.5 w-3.5" />
                 <span>For Recruiters & Alumni</span>
@@ -366,9 +567,9 @@ export default function HomePage() {
               <p className="text-sm leading-relaxed text-slate-600">
                 Recruiting top HR talent from GLIM Gurgaon? Connect with our committee to conduct guest lectures, host live project challenges, or access our candidate talent directory.
               </p>
-            </div>
+            </AnimatedSection>
 
-            <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
+            <AnimatedSection className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center" animation="slide-left" delay={0.2}>
               <Link
                 href="/alumni"
                 className="flex items-center justify-center gap-2 rounded-full bg-[#5850ec] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#5850ec]/30 hover:bg-[#4b44dc]"
@@ -381,11 +582,11 @@ export default function HomePage() {
               >
                 <span>Contact Club Leadership</span>
               </Link>
-            </div>
+            </AnimatedSection>
 
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
     </div>
   );

@@ -1,10 +1,14 @@
-import type { Metadata } from "next";
-import { BookOpen, Lightbulb } from "lucide-react";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Interview Prep Guide | HR Round Breakdown & Sample Answers",
-  description: "Comprehensive interview prep guide for GLIM HR students — HR rounds, case rounds, psychometric tests, and group exercises.",
-};
+import { BookOpen, Lightbulb } from "lucide-react";
+import AuthGuard from "@/components/AuthGuard";
+import {
+  AnimatedSection,
+  AnimatedBadge,
+  AnimatedHeading,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/AnimatedSection";
 
 const rounds = [
   {
@@ -70,75 +74,88 @@ export default function InterviewPrepPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-12 bg-[#f8fafc]">
       
-      {/* Header */}
+      {/* Header — Public Preview */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#5850ec]/30 bg-[#EEF2FF] px-3.5 py-1 font-mono text-xs font-semibold text-[#5850ec]">
-          <BookOpen className="h-3.5 w-3.5" />
-          <span>Flagship Placement Asset</span>
-        </div>
-        <h1 className="font-['Outfit'] text-4xl font-extrabold text-slate-900 sm:text-5xl">
-          Interview Prep Guide
-        </h1>
-        <p className="text-base text-slate-600 leading-relaxed">
-          Master every stage of the HR placement process. Round-by-round strategy guides, real interview questions from top recruiting firms, framework cheat-sheets, and sample answers.
-        </p>
+        <AnimatedBadge>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#5850ec]/30 bg-[#EEF2FF] px-3.5 py-1 font-mono text-xs font-semibold text-[#5850ec]">
+            <BookOpen className="h-3.5 w-3.5" />
+            <span>Flagship Placement Asset</span>
+          </div>
+        </AnimatedBadge>
+        <AnimatedHeading delay={0.1}>
+          <h1 className="font-['Outfit'] text-4xl font-extrabold text-slate-900 sm:text-5xl">
+            Interview Prep Guide
+          </h1>
+        </AnimatedHeading>
+        <AnimatedSection delay={0.2}>
+          <p className="text-base text-slate-600 leading-relaxed">
+            Master every stage of the HR placement process. Round-by-round strategy guides, real interview questions from top recruiting firms, framework cheat-sheets, and sample answers.
+          </p>
+        </AnimatedSection>
       </div>
 
-      {/* Round Breakdown */}
-      <div className="space-y-10">
-        {rounds.map((r) => (
-          <div
-            key={r.id}
-            className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xl space-y-6"
-          >
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-              <div>
-                <span className="font-mono text-xs font-bold text-[#5850ec] uppercase tracking-wider">
-                  {r.tag}
-                </span>
-                <h2 className="font-['Outfit'] text-2xl font-bold text-slate-900 mt-0.5">
-                  {r.title}
-                </h2>
-              </div>
-            </div>
-
-            <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-              {r.description}
-            </p>
-
-            {/* Questions List */}
-            <div className="grid gap-4">
-              {r.questions.map((q, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-5 space-y-3"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#5850ec] font-mono text-xs font-bold text-white">
-                      Q
+      {/* Protected Strategy Bank — Student Only Access */}
+      <AuthGuard
+        title="Interview Strategy Bank Access"
+        description="Please sign in with your Great Lakes Gurgaon Google account to view benchmark interview frameworks and sample recruiter-tested answers."
+      >
+        <StaggerContainer className="space-y-10 text-left" stagger={0.12}>
+          {rounds.map((r) => (
+            <StaggerItem key={r.id}>
+              <div
+                className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xl space-y-6"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                  <div>
+                    <span className="font-mono text-xs font-bold text-[#5850ec] uppercase tracking-wider">
+                      {r.tag}
                     </span>
-                    <h3 className="font-['Outfit'] text-base font-bold text-slate-900 leading-snug">
-                      {q.q}
-                    </h3>
-                  </div>
-
-                  <div className="ml-9 space-y-2">
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EEF2FF] px-3 py-1 font-mono text-[11px] font-bold text-[#5850ec]">
-                      <Lightbulb className="h-3 w-3" />
-                      <span>Recommended Framework: {q.framework}</span>
-                    </div>
-                    <p className="text-xs text-slate-700 leading-relaxed">
-                      <strong className="text-slate-900">Sample Approach: </strong>
-                      {q.answer}
-                    </p>
+                    <h2 className="font-['Outfit'] text-2xl font-bold text-slate-900 mt-0.5">
+                      {r.title}
+                    </h2>
                   </div>
                 </div>
-              ))}
-            </div>
 
-          </div>
-        ))}
-      </div>
+                <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
+                  {r.description}
+                </p>
+
+                {/* Questions List — staggered within round */}
+                <StaggerContainer className="grid gap-4" stagger={0.1}>
+                  {r.questions.map((q, idx) => (
+                    <StaggerItem key={idx}>
+                      <div
+                        className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-5 space-y-3"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#5850ec] font-mono text-xs font-bold text-white">
+                            Q
+                          </span>
+                          <h3 className="font-['Outfit'] text-base font-bold text-slate-900 leading-snug">
+                            {q.q}
+                          </h3>
+                        </div>
+
+                        <div className="ml-9 space-y-2">
+                          <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EEF2FF] px-3 py-1 font-mono text-[11px] font-bold text-[#5850ec]">
+                            <Lightbulb className="h-3 w-3" />
+                            <span>Recommended Framework: {q.framework}</span>
+                          </div>
+                          <p className="text-xs text-slate-700 leading-relaxed">
+                            <strong className="text-slate-900">Sample Approach: </strong>
+                            {q.answer}
+                          </p>
+                        </div>
+                      </div>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
+
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </AuthGuard>
 
     </div>
   );

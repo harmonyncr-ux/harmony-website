@@ -845,6 +845,15 @@ async function syncStoreToSupabase(store: HarmonyDataStore) {
   });
 }
 
+export async function deleteItemFromCloud(table: string, id: string) {
+  if (!supabase) return;
+  try {
+    await supabase.from(table).delete().eq("id", id);
+  } catch (err) {
+    console.error(`Failed to delete item ${id} from table ${table}:`, err);
+  }
+}
+
 // React Custom Hook for automatic hydration
 export function useHarmonyStore() {
   const [store, setStore] = useState<HarmonyDataStore>(initialData);

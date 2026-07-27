@@ -1,31 +1,43 @@
+"use client";
+
+import { motion } from "motion/react";
+
 export function UnderlineDoodle({ className = "" }: { className?: string }) {
   return (
     <svg
-      className={`w-full h-3 sm:h-4 ${className}`}
-      viewBox="0 0 240 18"
+      className={`w-full h-4 sm:h-6 ${className}`}
+      viewBox="0 0 300 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="none"
     >
-      {/* Top curved line */}
-      <path
-        d="M 2.5 4 C 45 1.5, 125 1.5, 237.5 3.5"
+      {/* Primary Thick Organic Curved Swoosh */}
+      <motion.path
+        d="M 3 14 C 60 22, 130 6, 200 16 C 240 21, 275 11, 297 12"
         stroke="currentColor"
-        strokeWidth="3"
+        strokeWidth="5.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 0.85, delay: 0.4, ease: "easeOut" }}
       />
-      {/* Bottom curved line with distinct gap */}
-      <path
-        d="M 6 13.5 C 50 10.5, 130 10.5, 234 13"
+      {/* Secondary Accent Curve Line */}
+      <motion.path
+        d="M 10 20 C 70 26, 140 12, 210 21 C 245 25, 270 17, 290 17"
         stroke="currentColor"
-        strokeWidth="2.5"
+        strokeWidth="3.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        opacity={0.7}
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 0.7 }}
+        transition={{ duration: 0.75, delay: 0.7, ease: "easeOut" }}
       />
     </svg>
   );
 }
+
 
 export function ArrowDoodle({ className = "h-8 w-8 text-indigo-400" }: { className?: string }) {
   return (
