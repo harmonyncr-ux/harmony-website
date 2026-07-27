@@ -29,6 +29,8 @@ This document serves as the single source of truth for the **Harmony HR Club Web
 | **GitHub Repository** | HTTPS URL | `https://github.com/harmonyncr-ux/harmony-website.git` |
 | **Supabase Project URL** | `NEXT_PUBLIC_SUPABASE_URL` | `https://iqtaatiwrbysjzozpdji.supabase.co` |
 | **Supabase Anon Public Key** | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxdGFhdGl3cmJ5c2p6b3pwZGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5NDMxMzAsImV4cCI6MjEwMDUxOTEzMH0.OUljiaIqhjb_IP1SJrq_kZdFyuo4Ci54MGFW2OdlDoA` |
+| **Google OAuth Client ID** | Supabase Provider Client ID | `919968752826-gpdb94buunehq6u7h6jkvp24imvfgcso.apps.googleusercontent.com` |
+| **Google OAuth Callback URI** | Supabase Auth Callback | `https://iqtaatiwrbysjzozpdji.supabase.co/auth/v1/callback` |
 | **Cloudflare R2 Bucket** | `R2_BUCKET_NAME` | `harmony-files` (25 GB Free Storage, $0 Egress Fees) |
 
 ---
@@ -39,7 +41,7 @@ This document serves as the single source of truth for the **Harmony HR Club Web
 - **Styling**: TailwindCSS + Custom CSS tokens (`globals.css` & `MagicBento.css`)
 - **Icons**: Lucide React + custom inline SVG icons (`LinkedinIcon.tsx`)
 - **Animations**: Framer Motion (`motion/react`) + GSAP physics engine + `canvas-confetti`
-- **Authentication**: Supabase Auth Google OAuth with domain verification (`email.endsWith("@greatlakes.edu.in")`)
+- **Authentication**: Supabase Auth Google OAuth (`provider: 'google'`, `hd: 'greatlakes.edu.in'`) with strict domain validation (`email.endsWith("@greatlakes.edu.in")`) & automatic sign-out for unauthorized accounts.
 - **Database & State**: Dual-mode store (`src/lib/adminStore.ts`) — reactive custom hook `useHarmonyStore()` with Supabase cloud synchronization and instant `localStorage` cache fallback.
 - **File Storage**: Cloudflare R2 via `@aws-sdk/client-s3` (`/api/upload`) with Supabase Storage fallback.
 - **Automated Live Data Feeds**:
