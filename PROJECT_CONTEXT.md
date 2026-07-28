@@ -41,7 +41,7 @@ This document serves as the single source of truth for the **Harmony HR Club Web
 - **Styling**: TailwindCSS + Custom CSS tokens (`globals.css` & `MagicBento.css`)
 - **Icons**: Lucide React + custom inline SVG icons (`LinkedinIcon.tsx`)
 - **Animations**: Framer Motion (`motion/react`) + GSAP physics engine + `canvas-confetti`
-- **Authentication**: Supabase Auth Google OAuth (`provider: 'google'`, `hd: 'greatlakes.edu.in'`) with strict domain validation (`email.endsWith("@greatlakes.edu.in")`) & automatic sign-out for unauthorized accounts.
+- **Authentication**: Supabase Auth Google OAuth (`provider: 'google'`, `hd: 'greatlakes.edu.in'`, `prompt: 'select_account'`) with strict domain validation (`email.endsWith("@greatlakes.edu.in")`), explicit account selector prompting, & automatic sign-out for unauthorized accounts.
 - **Database & State**: Dual-mode store (`src/lib/adminStore.ts`) — reactive custom hook `useHarmonyStore()` with Supabase cloud synchronization and instant `localStorage` cache fallback.
 - **File Storage**: Cloudflare R2 via `@aws-sdk/client-s3` (`/api/upload`) with Supabase Storage fallback.
 - **Automated Live Data Feeds**:

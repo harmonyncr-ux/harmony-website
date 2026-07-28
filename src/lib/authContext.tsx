@@ -134,6 +134,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         redirectTo,
         queryParams: {
           hd: "greatlakes.edu.in",
+          prompt: "select_account",
         },
       },
     });
